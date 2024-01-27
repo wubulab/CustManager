@@ -9,6 +9,7 @@ import ua.customer.repository.CustomerRepository;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+
 @Component
 @Service
 public class CustomerService {
@@ -34,8 +35,7 @@ public class CustomerService {
     }
 
     public Customer updateCustomer(Long id, Customer customerDetails) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
         customer.setFull_name(customerDetails.getFull_name());
         customer.setPhone(customerDetails.getPhone());
         customer.setUpdated(Instant.now());
@@ -44,8 +44,7 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Long Id) {
-        Customer customer = customerRepository.findById(Id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = customerRepository.findById(Id).orElseThrow(() -> new RuntimeException("Customer not found"));
         customer.setIs_active(false);
         customerRepository.save(customer);
 
