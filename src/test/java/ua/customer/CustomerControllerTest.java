@@ -31,8 +31,8 @@ class CustomerControllerTest {
     @Test
     void createCustomer() throws Exception {
         Customer customer = new Customer();
-        customer.setFull_name("John Doe");
-        customer.setEmail("john@example.com");
+        customer.setFull_name("Dmytro Doe");
+        customer.setEmail("Doe@example.com");
         given(customerServiсe.createCustomer(any(Customer.class))).willReturn(customer);
 
         mockMvc.perform(post("/api/customers")

@@ -1,11 +1,11 @@
 package ua.customer.model;
 
 import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.Email;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.Instant;
-
+@Component
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -21,14 +21,14 @@ public class Customer {
     private Instant updated;
 
     @Column(name = "full_name", nullable = false, length = 50)
-    @Pattern(regexp ="\\d{2,14}")
+    @Pattern(regexp = "\\d{2,14}")
     private String full_name;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
     @Pattern(regexp = "[^@\\s]+@[^@\\s]+\\d{2,100}", message = "Email should be valid with exactly one '@'")
     private String email;
 
-    @Column(name = "phone", length= 14)
+    @Column(name = "phone", length = 14)
     @Pattern(regexp = "\\+\\d{6,14}", message = "Phone should start with '+' and contain only digits")
     private String phone;
 
@@ -87,17 +87,24 @@ public class Customer {
         this.is_active = is_active;
     }
 
-    public Customer () {
+    public Customer() {
         this.is_active = true;
         this.created = Instant.now();
         this.updated = Instant.now();
 
+    }public Customer(String fullName, String email, String phone) {
+        this.full_name = full_name;
+        this.email = email;
+        this.phone = phone;
+
     }
 
+    @PrePersist
     protected void onCreate() {
         created = updated = Instant.now();
     }
 
+    @PreUpdate
     protected void onUpdate() {
         updated = Instant.now();
 
